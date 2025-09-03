@@ -1,0 +1,643 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sree Koodathil Madaswamy Temple</title>
+  <meta name="description" content="Temple website with pooja slot booking, user account, blog, about, and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- SCSS Source (for reference) -------------------------------------------------
+  $brand: #9b5de5;
+  $brand-2: #f15bb5;
+  $accent: #fee440;
+  $bg: #0e0f14;
+  $muted: #8a8f98;
+  $card: #161821;
+  $success: #1faa7a;
+
+  body { font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji'; color: #e6e8ec; background: linear-gradient(180deg, rgba(14,15,20,.98), rgba(14,15,20,.98)), url('/textures/noise.png'); }
+  .btn-brand { background: $brand; border: 0; &:hover { background: darken($brand, 6%); } }
+  .chip { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+  .card-glass { background: rgba(22,24,33,.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.08); }
+  .gradient-text { background: linear-gradient(90deg, $brand, $brand-2, $accent); -webkit-background-clip:text; background-clip:text; color: transparent; }
+  ------------------------------------------------------------------------------ -->
+</head>
+
+<style>
+
+    :root{--brand:#9b5de5;--brand2:#f15bb5;--accent:#fee440;--bg:#0e0f14;--muted:#8a8f98;--card:#161821;--success:#1faa7a}
+    html,body{height:100%}
+    body{font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji';background:linear-gradient(180deg,rgba(14,15,20,.98),rgba(14,15,20,.98)),radial-gradient(1200px 600px at 20% -10%,rgba(155,93,229,.2),transparent 60%),radial-gradient(900px 500px at 120% 10%,rgba(241,91,181,.15),transparent 60%),radial-gradient(900px 700px at -10% 120%,rgba(254,228,64,.1),transparent 60%);color:#e6e8ec}
+    .navbar{--bs-navbar-color:#dfe3ea;--bs-navbar-hover-color:#fff;--bs-navbar-brand-color:#fff;background:rgba(22,24,33,.6);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-link{position:relative}
+    .nav-link.active,.nav-link:hover{color:#fff !important}
+    .nav-link.active:after,.nav-link:hover:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:linear-gradient(90deg,var(--brand),var(--brand2),var(--accent))}
+    .hero{position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;inset:-2px;background:radial-gradient(600px 300px at 10% 10%,rgba(155,93,229,.2),transparent 60%),radial-gradient(600px 300px at 90% 20%,rgba(241,91,181,.15),transparent 60%);z-index:0}
+    .hero .container{position:relative;z-index:1}
+    .chip{display:inline-flex;gap:.5rem;align-items:center;border-radius:999px;padding:.35rem .75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cfd6e4}
+    .btn-brand{background:var(--brand);border:0;color:#fff}
+    .btn-brand:hover{background:#8749e1;color:#fff}
+    .btn-soft{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff}
+    .btn-soft:hover{background:rgba(255,255,255,.12);color:#fff}
+    .card-glass{background:rgba(22,24,33,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08)}
+    .gradient-text{background:linear-gradient(90deg,var(--brand),var(--brand2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .section{padding:72px 0}
+    .section-title{font-weight:800}
+    .slot{border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:.75rem 1rem;cursor:pointer;user-select:none;text-align:center}
+    .slot[data-status="booked"]{opacity:.6;text-decoration:line-through;cursor:not-allowed}
+    .slot[data-status="selected"]{border-color:var(--brand);box-shadow:0 0 0 .25rem rgba(155,93,229,.25)}
+    .badge-soft{background:rgba(31,170,122,.15);border:1px solid rgba(31,170,122,.35);color:#8fe3c8}
+    .form-control,.form-select{background:#0f1118;border:1px solid rgba(255,255,255,.12);color:#e6e8ec}
+    .form-control:focus,.form-select:focus{border-color:var(--brand);box-shadow:0 0 0 .25rem rgba(155,93,229,.25)}
+    .footer{border-top:1px solid rgba(255,255,255,.08);background:#0c0d12;color:#cbd3e6}
+    .link-muted{color:#cbd3e6}
+    .link-muted:hover{color:#fff}
+    .badge-category{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+  
+h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
+#slotGrid .slot { color: #fff; font-weight: 600; }
+
+
+#booking .card { color: #fff; }
+
+/* for small box */
+.god-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 16px;
+}
+.god-box:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 0 20px rgba(155,93,229,0.5);
+}
+.god-box h5 {
+  color: #fff;
+  font-weight: 700;
+}
+  
+</style>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container py-2">
+      <a class="navbar-brand fw-bold" href="#home"><i class="bi bi-flower3 me-2"></i>KMB</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-dark navbar-toggler-icon "></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#booking">Pooja Booking</a></li>
+          <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <div class="ms-lg-3 d-flex gap-2">
+          <button class="btn btn-soft" data-bs-toggle="modal" data-bs-target="#authModal"><i class="bi bi-person me-1"></i> Account</button>
+          <a class="btn btn-brand" href="#booking"><i class="bi bi-calendar2-check me-1"></i> Book Pooja</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / HOME -->
+  <header id="home" class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="chip mb-3"><i class="bi bi-sunrise"></i><span>Temple opens 4:30 AM — 9:00 PM</span></div>
+          <h1 class="display-5 fw-800 mb-3">Sree <span class="gradient-text">Koodathil</span> Madaswamy <span class="gradient-text">Bhadrakali</span> Temple</h1>
+          <p class="lead text-white-50 mb-4">A simple, fast, and secure way to reserve pooja offerings, manage your visits, and stay updated with temple events.</p>
+          <div class="d-flex gap-2">
+            <a href="#booking" class="btn btn-brand btn-lg"><i class="bi bi-magic me-1"></i> Reserve a Slot</a>
+            <a href="#about" class="btn btn-soft btn-lg">Learn more</a>
+          </div>
+          <div class="d-flex align-items-center gap-3 mt-4">
+            <span class="badge badge-soft rounded-pill px-3 py-2"><i class="bi bi-shield-lock me-1"></i> Secure & Private</span>
+            <span class="text-muted">No queues • Instant confirmation</span>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card card-glass p-3">
+              <img class="img-fluid rounded-4 shadow" src="{% static "img/logo.png" %}" alt="Temple" />
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- HOME CAROUSEL -->
+
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <img class="img-fluid rounded-4 shadow" src="{% static "img/1.jpg" %}" alt="Temple" />
+        </div>
+        <div class="col-lg-6">
+          <h2 class="section-title mb-3">About the Temple</h2>
+          <p class="text-white-50">Located just 1 km south of Alappuzha town, Lord Madaswamy Temple is a spiritual landmark with over a century of history. The temple was originally built more than 100 years ago when Tamil devotees brought Lord Madaswamy from Tenkasi village in Tamil Nadu. In 2010, the temple was reconstructed, maintaining its spiritual essence while enhancing the structure for future generations.</p>
+          <p class="text-white-50">തെങ്കാശിയിൽ നിന്നും തമിഴ്മക്കൾ കൊണ്ട് വന്നു ആരാധിച്ചതാണ് മാടസ്വാമി, കേരളത്തിലെ ആലപ്പുഴ ടൗണിൽ 1km മാറി അമ്പലപ്പുഴ താലൂക്കിൽ ജില്ലാ കോർട്ട് വാർഡിൽ വടക്ക് ദർശമായി കുടിയിരുക്കുന്ന അപൂർവ ക്ഷേത്ര ആണ് ശ്രീ കൂടത്തിൽ മാടസ്വാമി ക്ഷേത്രം</p>
+          <p class="text-white-50">പ്രതിഷ്ഠാദിനം മീന മാസത്തിലേ മകം നക്ഷത്രത്തിൽ ക്ഷേത്രം തന്ത്രി അമ്പലപ്പൂഴ ബ്രഹ്മശ്രീ പൂതൂ മന വാസുദേവൻ നമ്പൂതിരിയുടെ കാർമികത്വത്തിൽ വിശാ ഷാൽ പൂജകൾ നടത്തപ്പെടുന്നു</p>
+          <div class="row g-3 mt-2">
+            <div class="col-6">
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-flower1"></i> Daily Poojas</div><small class="text-white-50">Morning, noon, evening schedules.</small></div>
+            </div>
+            <div class="col-6">
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-people"></i> Community</div><small class="text-white-50">Annadanam & seva opportunities.</small></div>
+            </div>
+          </div>
+          <a href="#booking" class="btn btn-brand mt-3">Book a Pooja</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOD NAMES SECTION -->
+<section id="gods" class="section">
+  <div class="container">
+    <h2 class="section-title mb-4 text-center">Other Deities Include: മറ്റ് ദേവതകൾ</h2>
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <div class="god-box card-glass text-center p-4 h-100">
+          <h5 class="mb-0">Yakshiamma</h5>
+          {% comment %} <h5 class="mb-0">യക്ഷിയമ്മ</h5> {% endcomment %}
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="god-box card-glass text-center p-4 h-100">
+          <h5 class="mb-0">Yogeshwaran</h5>
+          {% comment %} <h5 class="mb-0">യോഗേശ്വരൻ</h5> {% endcomment %}
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="god-box card-glass text-center p-4 h-100">
+          <h5 class="mb-0">Rakshas</h5>
+          {% comment %} <h5 class="mb-0">രക്ഷസ്</h5> {% endcomment %}
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="god-box card-glass text-center p-4 h-100">
+          <h5 class="mb-0">Nagarajav</h5>
+          {% comment %} <h5 class="mb-0">നാഗരാജാവ്</h5> {% endcomment %}
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="god-box card-glass text-center p-4 h-100">
+          <h5 class="mb-0">Nagayakshi</h5>
+          {% comment %} <h5 class="mb-0">നാഗയക്ഷി</h5> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- POOJA INFORMATION -->
+  <section id="pooja-info" class="section">
+    <div class="container">
+      <h2 class="section-title mb-3">Temple Pooja Information</h2>
+      <p class="text-white-50">Details of daily poojas, timings, and offerings:</p>
+      <div class="table-responsive">
+        <table class="table table-bordered table-dark table-striped align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Pooja Name</th>
+              <th scope="col">Timing</th>
+              <th scope="col">Duration</th>
+              <th scope="col">Donation (₹)</th>
+              <th scope="col">Special Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Archana</td>
+              <td>6:00 AM – 7:00 AM</td>
+              <td>30 mins</td>
+              <td>200</td>
+              <td>Performed daily with flowers & mantra chanting</td>
+            </tr>
+            <tr>
+              <td>Abhishekam</td>
+              <td>7:30 AM – 8:30 AM</td>
+              <td>45 mins</td>
+              <td>500</td>
+              <td>Milk, honey, and sandal offered to deity</td>
+            </tr>
+            <tr>
+              <td>Homam</td>
+              <td>9:00 AM – 10:30 AM</td>
+              <td>1 hr 30 mins</td>
+              <td>1000</td>
+              <td>Fire ritual invoking divine blessings</td>
+            </tr>
+            <tr>
+              <td>Special Darshan</td>
+              <td>4:30 PM – 6:00 PM</td>
+              <td>1 hr</td>
+              <td>750</td>
+              <td>Skip the queue for evening darshan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BOOKING -->
+  <section id="booking" class="section">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="section-title">KMB Pooja Booking</h2>
+        <span class="text-muted">Select date & choose available slot</span>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="card card-glass p-3 h-100">
+            <h5>Booking Details</h5>
+            <form id="bookingForm" class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Name</label>
+                <input type="text" placeholder="Enter your Name" class="form-control" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Email</label>
+                <input type="email" placeholder="Enter your Email" class="form-control" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Pooja</label>
+                <select class="form-select" id="pooja" required>
+                  <option value="">Choose...</option>
+                  <option value="archana">Archana</option>
+                  <option value="abhishekam">Abhishekam</option>
+                  <option value="homam">Homam</option>
+                  <option value="special">Special Darshan</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Nakshatharam</label>
+                <select class="form-select" id="pooja" required>
+                  <option value="">Choose...</option>
+                  <option value="archana">Archana</option>
+                  <option value="abhishekam">Abhishekam</option>
+                  <option value="homam">Homam</option>
+                  <option value="special">Special Darshan</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Devotees</label>
+                <input type="number" class="form-control" id="devotees" min="1" value="1" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Price</label>
+                <input type="number" class="form-control" id="devotees" min="1" value="1" required />
+              </div>
+              {% comment %} <div class="col-12">
+                <label class="form-label">Selected Slot</label>
+                <input class="form-control" id="selectedSlot" placeholder="No slot selected" readonly />
+              </div> {% endcomment %}
+              <div class="col-12 d-grid">
+                <button class="btn btn-brand" type="submit"><i class="bi bi-ticket-perforated me-1"></i> Confirm Booking</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <h2 class="section-title mb-3">Unique Features of the Temple</h2>
+          <p class="text-white-50">Entirely built using Krishnashila – a rare and sacred black stone known for its spiritual power.</p>
+          <p class="text-white-50">ക്ഷേത്രത്തിന്റെ പ്രത്യേകതകൾ പൂർണമായും കൃഷ്ണശിലയിൽ നിർമ്മിച്ച ക്ഷേത്രം. 5 അടിക്ക് മേൽ ഉയരം ഉള്ള പ്രതിഷ്ട ആണ് മാടസ്വാമി.നാല് ദേവൻമാർ, നാല് ദേവതകൾ ഉള്ള ക്ഷേത്രം എന്ന് അറിയപ്പെടുന്ന.</p>
+          <h4 class="section-title mb-3">പ്രത്യേക പൂജകള്‍</h4>
+          <p class="text-white-50">ശ്രീ ഭദ്രകാളിക്ക് വെള്ളി ചൊവ്വ ദിവസത്തിൽ രക്ത പൂഷ്പാഞ്ജലി, കൂങ്കുമാഭിഷേകം നടത്തപ്പെടുന്നു. മാടസ്വാമിക്ക് വടമാല, കടുംപായസം, പാൽ, കരിക്ക് അഭിഷേകം.</p>
+          <div class="row g-3 mt-2">
+            <div class="col-6">
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-flower1"></i> Lord Madaswamy</div><small class="text-white-50">Son of Lord Shiva and Goddess Parvathy, the main deity. ലോർഡ് ശിവന്റെയും പാർവതിയമ്മയുടെയും പുത്രൻ, പ്രധാന പ്രതിഷ്ഠ.</small></div>
+            </div>
+            <div class="col-6">
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-flower1"></i> Goddess Bhadrakali</div><small class="text-white-50">Given equal respect and rituals. സമാനമായ പാരമായിട്ടുള്ള പൂജകളും അഭിഷേകങ്ങളും ലഭിക്കുന്നു</small></div>
+            </div>
+            <div class="col-6">
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-flower1"></i> Goddess Mutharamma</div><small class="text-white-50">Worshipped along with Madaswamy. മാടസ്വാമിയോടൊപ്പം ആരാധിക്കപ്പെടുന്നു.</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="section">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="section-title">Temple Blog</h2>
+        <a class="btn btn-soft" href="#">View all</a>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <article class="card card-glass h-100">
+            <img class="card-img-top" src="{% static "img/1.jpg" %}" alt="Festival" />
+            <div class="card-body">
+              <span class="badge rounded-pill badge-category mb-2">Festival</span>
+              <h5 class="card-title">Navaratri Celebrations</h5>
+              <p class="card-text text-white-50">Highlights, rituals, and community programs lined up for this year's Navaratri.</p>
+              <a href="#" class="link-muted">Read more <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </article>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <article class="card card-glass h-100">
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1603539947678-c3809f2059c9?q=80&w=1600&auto=format&fit=crop" alt="Annadanam" />
+            <div class="card-body">
+              <span class="badge rounded-pill badge-category mb-2">Seva</span>
+              <h5 class="card-title">Weekly Annadanam</h5>
+              <p class="card-text text-white-50">Join our food donation drive—volunteer or sponsor meals for devotees.</p>
+              <a href="#" class="link-muted">Read more <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </article>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <article class="card card-glass h-100">
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1590102426318-4165ec2d8f84?q=80&w=1600&auto=format&fit=crop" alt="Pooja" />
+            <div class="card-body">
+              <span class="badge rounded-pill badge-category mb-2">Guides</span>
+              <h5 class="card-title">Pooja Etiquette 101</h5>
+              <p class="card-text text-white-50">A simple guide on how to prepare for your visit and participate respectfully.</p>
+              <a href="#" class="link-muted">Read more <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <h2 class="section-title mb-3">Contact Us</h2>
+          <p class="text-white-50">Whether you’re looking for blessings, peace of mind, or a spiritual experience, Lord Madaswamy Temple welcomes everyone with open arms.</p>
+          <p class="text-white-50">ആശീർവാദത്തിനും ആത്മിക ശാന്തിക്കും വേണ്ടി, അല്ലെങ്കിൽ ഒരു പ്രത്യേക ആത്മീയാനുഭവത്തിനായി,
+          ലോർഡ് മാടസ്വാമി ക്ഷേത്രം നിങ്ങളെ ഹൃദയപൂർവ്വം സ്വാഗതം ചെയ്യുന്നു.</p>
+          <form id="contactForm" class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" id="cName" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="cEmail" required />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Message</label>
+              <textarea class="form-control" id="cMsg" rows="4" required></textarea>
+            </div>
+            <div class="col-12 d-grid d-sm-block">
+              <button class="btn btn-brand" type="submit"><i class="bi bi-envelope-paper-heart me-1"></i> Send Message</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-6">
+          <div class=q"card card-glass p-3 h-100">
+            <h5 class="text-white">Visit Us</h5>
+            <h6 class="text-white-50">Timings</h6>
+            <ul class="list-unstyled text-white-50 mb-0">
+              <li>Morning: 4:30 AM – 12:00 PM</li>
+              <li>Evening: 4:30 PM – 9:00 PM</li>
+              <li>Special days & festivals: Extended hours</li>
+              <li class="text-white">Contact Us: 9037773668, 9995201120</li>
+            </ul>
+            <div class="ratio ratio-16x9 rounded-4 overflow-hidden mt-3">
+              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=77.59%2C12.97%2C77.62%2C12.99&layer=mapnik" style="border:0"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer py-4">
+    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+      <div class="small">© <span id="yr"></span> KMB. All rights reserved.</div>
+      <div class="small"> <span id="yr"></span> Designed by <a class="link-muted" href="https://rajeevportfolio.pythonanywhere.com">Hector Coding</a></div>
+      <div class="d-flex gap-3 small">
+        <a class="link-muted" href="#about">About</a>
+        <a class="link-muted" href="#blog">Blog</a>
+        <a class="link-muted" href="#contact">Contact</a>
+        <a class="link-muted" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Account</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AUTH MODAL (User Account) -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content card-glass">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-person-circle me-2"></i> Devotee Account</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <ul class="nav nav-pills nav-fill p-3 pt-3" id="authTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-pane" type="button" role="tab">Login</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-pane" type="button" role="tab">Register</button>
+            </li>
+          </ul>
+          <div class="tab-content p-3 pt-0">
+            <div class="tab-pane fade show active" id="login-pane" role="tabpanel">
+              <form id="loginForm" class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Username</label>
+                  <input type="text" name="username" class="form-control" id="loginEmail" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control" id="loginPass" required />
+                </div>
+                <div class="col-12 d-grid">
+                  <button class="btn btn-brand" type="submit">Login</button>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="register-pane" role="tabpanel">
+              <form id="registerForm" class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">First Name</label>
+                  <input type="text" name="firstname" class="form-control" id="regName" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" name="lastname" class="form-control" id="regPhone" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Email</label>
+                  <input type="email" name="email" class="form-control" id="regEmail" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control" id="regPass" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Confirm Password</label>
+                  <input type="password" name="password" class="form-control" id="regPass2" required />
+                </div>
+                <div class="col-12 d-grid">
+                  <button class="btn btn-brand" type="submit">Create Account</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1100">
+    <div id="toast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastBody">Action completed.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // util: toast
+    const showToast = (msg) => {
+      const el = document.getElementById('toast');
+      document.getElementById('toastBody').textContent = msg;
+      const t = new bootstrap.Toast(el);
+      t.show();
+    };
+
+    // Footer year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Populate time options for quick booking (every 30 min, 6:00–20:00)
+    const qbTime = document.getElementById('qbTime');
+    const times = [];
+    for (let h = 6; h <= 20; h++) {
+      for (let m of [0,30]) {
+        const hh = String(h).padStart(2,'0');
+        const mm = String(m).padStart(2,'0');
+        times.push(`${hh}:${mm}`);
+      }
+    }
+    qbTime.innerHTML = '<option value="">Select time</option>' + times.map(t=>`<option>${t}</option>`).join('');
+
+    // Slot grid generator
+    const slotGrid = document.getElementById('slotGrid');
+    const slotStrings = ['06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
+
+    function renderSlots(bookedIdx = []){
+      slotGrid.innerHTML = '';
+      slotStrings.forEach((s, idx) => {
+        const div = document.createElement('div');
+        div.className = 'col-6 col-sm-4 col-md-3';
+        const slot = document.createElement('div');
+        slot.className = 'slot';
+        slot.textContent = s;
+        slot.dataset.status = bookedIdx.includes(idx) ? 'booked' : 'free';
+        slot.addEventListener('click', () => {
+          if (slot.dataset.status === 'booked') return;
+          document.querySelectorAll('.slot[data-status="selected"]').forEach(el=>el.dataset.status='free');
+          slot.dataset.status = 'selected';
+          document.getElementById('selectedSlot').value = s;
+        });
+        div.appendChild(slot);
+        slotGrid.appendChild(div);
+      });
+    }
+
+    // Simulate availability based on date/pooja
+    const poojaSelect = document.getElementById('pooja');
+    const dateInput = document.getElementById('date');
+
+    function updateAvailability(){
+      // simple deterministic mock: book some indexes based on date + pooja hash
+      const d = new Date(dateInput.value || new Date());
+      const seed = d.getDate() + (poojaSelect.value || 'x').length;
+      const booked = [];
+      for (let i=0;i<slotStrings.length;i++){
+        if ((i + seed) % 7 === 0) booked.push(i);
+      }
+      renderSlots(booked);
+    }
+
+    poojaSelect.addEventListener('change', updateAvailability);
+    dateInput.addEventListener('change', updateAvailability);
+
+    // Initialize defaults
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth()+1).padStart(2,'0');
+    const dd = String(today.getDate()).padStart(2,'0');
+    document.getElementById('qbDate').value = `${yyyy}-${mm}-${dd}`;
+    document.getElementById('date').value = `${yyyy}-${mm}-${dd}`;
+    updateAvailability();
+
+    // Forms (mock submit)
+    document.getElementById('bookingForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const slot = document.getElementById('selectedSlot').value;
+      if (!slot) { showToast('Please select a slot.'); return; }
+      showToast('Booking confirmed! Check your email for details.');
+    });
+
+    document.getElementById('quickBookingForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      showToast('Quick booking placed! We\'ll confirm shortly.');
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      showToast('Thank you! Your message has been sent.');
+      e.target.reset();
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      showToast('Logged in successfully (demo).');
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const p1 = document.getElementById('regPass').value;
+      const p2 = document.getElementById('regPass2').value;
+      if (p1 !== p2) { showToast('Passwords do not match.'); return; }
+      showToast('Account created (demo).');
+    });
+
+    // Smooth scroll active link handling
+    document.querySelectorAll('.nav-link').forEach(link=>{
+      link.addEventListener('click', ()=>{
+        document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
