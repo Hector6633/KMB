@@ -152,10 +152,10 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
           <p class="text-white-50">പ്രതിഷ്ഠാദിനം മീന മാസത്തിലേ മകം നക്ഷത്രത്തിൽ ക്ഷേത്രം തന്ത്രി അമ്പലപ്പൂഴ ബ്രഹ്മശ്രീ പൂതൂ മന വാസുദേവൻ നമ്പൂതിരിയുടെ കാർമികത്വത്തിൽ വിശാ ഷാൽ പൂജകൾ നടത്തപ്പെടുന്നു</p>
           <div class="row g-3 mt-2">
             <div class="col-6">
-              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-flower1"></i> Daily Poojas</div><small class="text-white-50">Morning, noon, evening schedules.</small></div>
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-flower1"></i> Daily Poojas</div><small class="text-white-50">Morning and evening schedules.</small></div>
             </div>
             <div class="col-6">
-              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-people"></i> Community</div><small class="text-white-50">Annadanam & seva opportunities.</small></div>
+              <div class="card card-glass p-3 h-100"><div class="text-white"><i class="bi bi-people"></i> Community</div><small class="text-white-50">KMB & Youth Wing opportunities.</small></div>
             </div>
           </div>
           <a href="#booking" class="btn btn-brand mt-3">Book a Pooja</a>
@@ -261,7 +261,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   <section id="booking" class="section">
     <div class="container">
       <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2 class="section-title">KMB Pooja Booking</h2>
+        <h2 class="section-title">KMB Pooja Booking Slot</h2>
         <span class="text-muted">Select date & choose available slot</span>
       </div>
 
@@ -346,43 +346,21 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   <section id="blog" class="section">
     <div class="container">
       <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2 class="section-title">Temple Blog</h2>
-        <a class="btn btn-soft" href="#">View all</a>
+        <h2 class="section-title">Temple Blogs</h2>
       </div>
       <div class="row g-4">
+        {% for blog in blogs %}
         <div class="col-md-6 col-lg-4">
           <article class="card card-glass h-100">
-            <img class="card-img-top" src="{% static "img/1.jpg" %}" alt="Festival" />
+            <img class="card-img-top" src="{{blog.blog_img.url}}" alt="Festival" />
             <div class="card-body">
-              <span class="badge rounded-pill badge-category mb-2">Festival</span>
-              <h5 class="card-title">Navaratri Celebrations</h5>
-              <p class="card-text text-white-50">Highlights, rituals, and community programs lined up for this year's Navaratri.</p>
-              <a href="#" class="link-muted">Read more <i class="bi bi-arrow-right"></i></a>
+              <span class="badge rounded-pill badge-category mb-2"></span>
+              <h5 class="card-title text-white">{{blog.blog_title}}</h5>
+              <p class="card-text text-white-50">{{blog.blog_description}}</p>
             </div>
           </article>
         </div>
-        <div class="col-md-6 col-lg-4">
-          <article class="card card-glass h-100">
-            <img class="card-img-top" src="https://images.unsplash.com/photo-1603539947678-c3809f2059c9?q=80&w=1600&auto=format&fit=crop" alt="Annadanam" />
-            <div class="card-body">
-              <span class="badge rounded-pill badge-category mb-2">Seva</span>
-              <h5 class="card-title">Weekly Annadanam</h5>
-              <p class="card-text text-white-50">Join our food donation drive—volunteer or sponsor meals for devotees.</p>
-              <a href="#" class="link-muted">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <article class="card card-glass h-100">
-            <img class="card-img-top" src="https://images.unsplash.com/photo-1590102426318-4165ec2d8f84?q=80&w=1600&auto=format&fit=crop" alt="Pooja" />
-            <div class="card-body">
-              <span class="badge rounded-pill badge-category mb-2">Guides</span>
-              <h5 class="card-title">Pooja Etiquette 101</h5>
-              <p class="card-text text-white-50">A simple guide on how to prepare for your visit and participate respectfully.</p>
-              <a href="#" class="link-muted">Read more <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -396,18 +374,26 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
           <p class="text-white-50">Whether you’re looking for blessings, peace of mind, or a spiritual experience, Lord Madaswamy Temple welcomes everyone with open arms.</p>
           <p class="text-white-50">ആശീർവാദത്തിനും ആത്മിക ശാന്തിക്കും വേണ്ടി, അല്ലെങ്കിൽ ഒരു പ്രത്യേക ആത്മീയാനുഭവത്തിനായി,
           ലോർഡ് മാടസ്വാമി ക്ഷേത്രം നിങ്ങളെ ഹൃദയപൂർവ്വം സ്വാഗതം ചെയ്യുന്നു.</p>
-          <form id="contactForm" class="row g-3">
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            <h1{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h1>
+          </div>
+          {% endfor %}
+          {% endif %}
+          <form method="post" id="contactForm" action="{% url "contact_us" %}" class="row g-3">
+            {% csrf_token %}
             <div class="col-md-6">
               <label class="form-label">Name</label>
-              <input type="text" class="form-control" id="cName" required />
+              <input type="text" class="form-control" name="name" id="cName" required/>
             </div>
             <div class="col-md-6">
               <label class="form-label">Email</label>
-              <input type="email" class="form-control" id="cEmail" required />
+              <input type="email" class="form-control" name="email" id="cEmail" required/>
             </div>
             <div class="col-12">
               <label class="form-label">Message</label>
-              <textarea class="form-control" id="cMsg" rows="4" required></textarea>
+              <textarea class="form-control" id="cMsg" name="message" rows="4" required></textarea>
             </div>
             <div class="col-12 d-grid d-sm-block">
               <button class="btn btn-brand" type="submit"><i class="bi bi-envelope-paper-heart me-1"></i> Send Message</button>
@@ -419,8 +405,8 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
             <h5 class="text-white">Visit Us</h5>
             <h6 class="text-white-50">Timings</h6>
             <ul class="list-unstyled text-white-50 mb-0">
-              <li>Morning: 4:30 AM – 12:00 PM</li>
-              <li>Evening: 4:30 PM – 9:00 PM</li>
+              <li>Morning: 4:30 AM – 10:00 PM</li>
+              <li>Evening: 5:30 PM – 8:00 PM</li>
               <li>Special days & festivals: Extended hours</li>
               <li class="text-white">Contact Us: 9037773668, 9995201120</li>
             </ul>
