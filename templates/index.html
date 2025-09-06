@@ -215,41 +215,20 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
           <thead>
             <tr>
               <th scope="col">Pooja Name</th>
-              <th scope="col">Timing</th>
               <th scope="col">Duration</th>
-              <th scope="col">Donation (₹)</th>
+              <th scope="col">Price (₹)</th>
               <th scope="col">Special Notes</th>
             </tr>
           </thead>
           <tbody>
+            {% for pooja in pooja_table %}
             <tr>
-              <td>Archana</td>
-              <td>6:00 AM – 7:00 AM</td>
-              <td>30 mins</td>
-              <td>200</td>
-              <td>Performed daily with flowers & mantra chanting</td>
+              <td>{{pooja.pooja_name}}</td>
+              <td>{{pooja.duration}}</td>
+              <td>{{pooja.price}}</td>
+              <td>{{pooja.special_note}}</td>
             </tr>
-            <tr>
-              <td>Abhishekam</td>
-              <td>7:30 AM – 8:30 AM</td>
-              <td>45 mins</td>
-              <td>500</td>
-              <td>Milk, honey, and sandal offered to deity</td>
-            </tr>
-            <tr>
-              <td>Homam</td>
-              <td>9:00 AM – 10:30 AM</td>
-              <td>1 hr 30 mins</td>
-              <td>1000</td>
-              <td>Fire ritual invoking divine blessings</td>
-            </tr>
-            <tr>
-              <td>Special Darshan</td>
-              <td>4:30 PM – 6:00 PM</td>
-              <td>1 hr</td>
-              <td>750</td>
-              <td>Skip the queue for evening darshan</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -269,51 +248,51 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
         <div class="col-lg-5">
           <div class="card card-glass p-3 h-100">
             <h5>Booking Details</h5>
-            <form id="bookingForm" class="row g-3">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                <h1{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h1>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form method="post" action="{% url "pooja_booking" %}" id="bookingForm" class="row g-3">
+              {% csrf_token %}
               <div class="col-12">
                 <label class="form-label">Name</label>
-                <input type="text" placeholder="Enter your Name" class="form-control" required />
+                <input type="text" name="name" placeholder="Enter your Name" class="form-control" required />
               </div>
               <div class="col-12">
                 <label class="form-label">Email</label>
-                <input type="email" placeholder="Enter your Email" class="form-control" required />
+                <input type="email" name="email" placeholder="Enter your Email" class="form-control" required />
               </div>
               <div class="col-12">
                 <label class="form-label">Pooja</label>
-                <select class="form-select" id="pooja" required>
-                  <option value="">Choose...</option>
-                  <option value="archana">Archana</option>
-                  <option value="abhishekam">Abhishekam</option>
-                  <option value="homam">Homam</option>
-                  <option value="special">Special Darshan</option>
+                <select class="form-select" name="pooja_name" id="pooja" required>
+                  {% for pooja in pooja_info %}
+                  <option name="pooja_name" value="{{pooja.pooja_name}}">{{pooja.pooja_name}}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="col-12">
                 <label class="form-label">Nakshatharam</label>
-                <select class="form-select" id="pooja" required>
-                  <option value="">Choose...</option>
-                  <option value="archana">Archana</option>
-                  <option value="abhishekam">Abhishekam</option>
-                  <option value="homam">Homam</option>
-                  <option value="special">Special Darshan</option>
+                <select class="form-select" name="nakshatharam" id="pooja" required>
+                  {% for pooja in pooja_info %}
+                  <option name="nakshatharam" value="{{pooja.nakshatharam}}">{{pooja.nakshatharam}}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Date</label>
-                <input type="date" class="form-control" id="date" required />
+                <input type="date" name="date" class="form-control" id="date" required />
               </div>
               <div class="col-md-6">
-                <label class="form-label">Devotees</label>
-                <input type="number" class="form-control" id="devotees" min="1" value="1" required />
+                <label class="form-label">Quantity</label>
+                <input type="number" name="quantity" class="form-control" id="devotees" min="1" value="1" required />
               </div>
               <div class="col-12">
                 <label class="form-label">Price</label>
-                <input type="number" class="form-control" id="devotees" min="1" value="1" required />
+                <input type="number" readonly placeholder="Prices Displayed on the Temple Pooja Table" class="form-control" id="devotees" />
               </div>
-              {% comment %} <div class="col-12">
-                <label class="form-label">Selected Slot</label>
-                <input class="form-control" id="selectedSlot" placeholder="No slot selected" readonly />
-              </div> {% endcomment %}
               <div class="col-12 d-grid">
                 <button class="btn btn-brand" type="submit"><i class="bi bi-ticket-perforated me-1"></i> Confirm Booking</button>
               </div>
@@ -411,7 +390,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
               <li class="text-white">Contact Us: 9037773668, 9995201120</li>
             </ul>
             <div class="ratio ratio-16x9 rounded-4 overflow-hidden mt-3">
-              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=77.59%2C12.97%2C77.62%2C12.99&layer=mapnik" style="border:0"></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d983.7494851395106!2d76.34056135637474!3d9.508907378890699!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08844298f8b447%3A0xb7779f7e1b6d9317!2sMadaswamy%20Sree%20Koodathil%20Temple!5e0!3m2!1sen!2sin!4v1756989133477!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
         </div>
@@ -423,7 +402,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   <footer class="footer py-4">
     <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
       <div class="small">© <span id="yr"></span> KMB. All rights reserved.</div>
-      <div class="small"> <span id="yr"></span> Designed by <a class="link-muted" href="https://rajeevportfolio.pythonanywhere.com">Hector Coding</a></div>
+      <div class="small"> <span id="yr"></span> Designed by <a class="link-muted" href="https://rajeevportfolio.pythonanywhere.com">Rajeev</a></div>
       <div class="d-flex gap-3 small">
         <a class="link-muted" href="#about">About</a>
         <a class="link-muted" href="#blog">Blog</a>
