@@ -1,0 +1,345 @@
+/* ------------------------------
+   Base Theme
+------------------------------ */
+:root {
+  --brand: #9b5de5;
+  --brand-2: #f15bb5;
+  --accent: #fee440;
+  --bg: #0e0f14;
+  --muted: #8a8f98;
+  --card: #161821;
+  --success: #1faa7a;
+}
+
+body {
+  font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #e6e8ec;
+  background: linear-gradient(180deg, rgba(14,15,20,.98), rgba(14,15,20,.98)), url('/textures/noise.png');
+  background-size: cover;
+}
+
+/* ------------------------------
+   Navbar
+------------------------------ */
+.navbar {
+  background: rgba(22,24,33,.9);
+  backdrop-filter: blur(10px);
+}
+.navbar .nav-link {
+  color: #e6e8ec;
+  font-weight: 500;
+}
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+  color: var(--accent);
+}
+.navbar-brand {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ------------------------------
+   Buttons
+------------------------------ */
+.btn-brand {
+  background: var(--brand);
+  border: none;
+  color: #fff;
+  transition: 0.3s;
+}
+.btn-brand:hover {
+  background: #8648cc;
+}
+.btn-soft {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+  color: #e6e8ec;
+}
+.btn-soft:hover {
+  background: rgba(255,255,255,.15);
+}
+
+/* ------------------------------
+   Chips / Badges
+------------------------------ */
+.chip, .badge-soft {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  color: #e6e8ec;
+  font-size: 0.85rem;
+  padding: .4rem .75rem;
+  border-radius: 50px;
+}
+
+/* ------------------------------
+   Glass Cards
+------------------------------ */
+.card-glass {
+  background: rgba(22,24,33,.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 1rem;
+  color: #e6e8ec;
+}
+
+/* ------------------------------
+   Carousel / Hero
+------------------------------ */
+.carousel-inner img {
+  height: 90vh;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+.carousel-caption {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.temple-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.5rem;
+  line-height: 1.3;
+  /* background: linear-gradient(90deg, var(--brand), var(--brand-2), var(--accent)); */
+   background: linear-gradient(90deg, #FFD700, #FFD700, #FFD700);
+    /* color: #ffd700;  */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+
+.temple-subtitle {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 1.2rem;
+  color: #f1f1f1;
+  text-shadow: 0 1px 6px rgba(0,0,0,.6);
+}
+
+/* ------------------------------
+   Section Defaults
+------------------------------ */
+.section {
+  padding: 4rem 0;
+}
+.section-title {
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ------------------------------
+   Gods Section
+------------------------------ */
+.god-box {
+  font-size: 1.1rem;
+  transition: transform .3s, background .3s;
+}
+.god-box:hover {
+  transform: translateY(-6px);
+  background: rgba(155,93,229,.2);
+}
+
+/* ------------------------------
+   Slots
+------------------------------ */
+.slot {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: .5rem;
+  padding: .75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.slot[data-status="free"]:hover {
+  background: var(--brand);
+  color: #fff;
+}
+.slot[data-status="selected"] {
+  background: var(--brand);
+  color: #fff;
+}
+.slot[data-status="booked"] {
+  background: #444;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* ------------------------------
+   Footer
+------------------------------ */
+.footer {
+  background: rgba(22,24,33,.9);
+  color: #aaa;
+}
+.footer a {
+  color: #888;
+  text-decoration: none;
+}
+.footer a:hover {
+  color: var(--accent);
+}
+/* Section Styling */
+.about-section {
+  min-height: 100vh;          /* One full screen height */
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;            /* Smaller padding */
+}
+/* 
+.about-section .row {
+  align-items: center;
+} */
+
+/* Limit image size */
+.about-section img {
+  max-height: 80vh;           /* Keeps image within screen */
+  object-fit: cover;          /* Crops neatly if needed */
+  width: 100%;
+}
+
+.about-section .row {
+  display: flex;
+  align-items: stretch;   /* Make both columns equal height */
+}
+
+.about-section .row.g-3.mt-3 {
+  margin-top: auto; /* Push cards neatly to bottom if needed */
+}
+
+.about-section .col-lg-6 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content inside column */
+}
+
+
+/* Heading */
+.section-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #FFD700, #FFB700, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-heading span {
+  color: #ffcc33;
+  font-style: italic;
+}
+
+/* Text */
+.about-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #ddd;
+}
+
+.about-text.malayalam {
+  font-family: "Noto Serif Malayalam", serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f5e6b3;
+}
+
+/* Image Frame */
+.image-frame {
+  border: 6px solid rgba(255, 215, 0, 0.5);
+  border-radius: 20px;
+  padding: 6px;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+/* Glass Cards */
+.card-glass {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.card-glass:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 215, 0, 0.15);
+}
+
+/* Gradient Title */
+.text-gradient {
+  background: linear-gradient(45deg, #ff4da6, #ff9933);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+
+
+.god-card {
+  background: rgba(255, 255, 255, 0.05); /* Transparent glass look */
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(255, 100, 150, 0.2);
+  color: #f1f1f1;
+  transition: all 0.4s ease;
+}
+
+.god-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(255, 120, 180, 0.4);
+  border-color: rgba(255, 120, 180, 0.6);
+}
+
+/* Heading highlight */
+.god-card h4 {
+  color: #ffb347; /* Warm gold/orange */
+}
+
+/* Malayalam text */
+.malayalam-text {
+  font-family: 'Noto Sans Malayalam', sans-serif;
+  font-size: 1rem;
+  color: #d9d9d9;
+}
+/* Enable vertical snapping */
+.snap-container {
+  height: 100vh;              /* full screen */
+  overflow-y: scroll;         /* enable scrolling */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* Each section takes full screen */
+.snap-section {
+  scroll-snap-align: start;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Festival Section Background */
+.festival-bg {
+  background: url('https://images.unsplash.com/photo-1570564913480-d064a74fdd1a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHRlbXBsZXN8ZW58MHx8MHx8fDA%3D') no-repeat center center;
+  background-size: cover;
+  border-radius: 10px;
+  min-height: 400px;      /* adjust height as needed */
+  margin: 0 auto;
+  max-width: 900px;       /* prevents full-width, keeps it centered */
+}
+
+/* Card inside festival */
+.festival-card {
+  max-width: 750px;
+  background: rgba(0,0,0,0.6)
+}

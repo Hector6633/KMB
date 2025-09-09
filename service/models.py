@@ -4,6 +4,7 @@ from django.db import models
 class Pooja_Booking(models.Model):
     name = models.CharField(max_length=20)
     email = models.EmailField()
+    phone_number = models.CharField(max_length=10)
     pooja_name = models.CharField(50)
     nakshatharam = models.CharField(50)
     date = models.CharField(50)
@@ -12,17 +13,14 @@ class Pooja_Booking(models.Model):
     def __str__(self):
         return self.name
     
-class Pooja_Info_Table(models.Model):
-    pooja_name = models.CharField(max_length=50)
-    duration = models.CharField(max_length=15)
-    special_note = models.TextField()
-    price = models.IntegerField()
     
-    def __str__(self) -> str:
+class Pooja_Name(models.Model):
+    pooja_name = models.CharField(max_length=50)
+    
+    def __str__(self):
         return self.pooja_name
     
-class Pooja_Info(models.Model):
-    pooja_name = models.CharField(max_length=50)
+class Nakshatharam(models.Model):
     nakshatharam = models.CharField(max_length=50)
     
     def __str__(self):

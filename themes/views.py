@@ -1,17 +1,16 @@
 from django.shortcuts import render, redirect
 from . models import *
-from service.models import Pooja_Info, Pooja_Info_Table
+from service.models import Pooja_Name
 from django.contrib import messages
 # Create your views here.
 def index(request):
     data = {
         'blogs': KMB_Blog.objects.all(),
-        'pooja_info': Pooja_Info.objects.all(),
-        'pooja_table': Pooja_Info_Table.objects.all(),
+        'pooja_info': Pooja_Name.objects.all(),
     }
     return render(request, 'index.html', data)
 
-def contact_us(request):
+def feedback_us(request):
     if request.method == 'POST':
         try:
             name = request.POST.get('name')
