@@ -1,13 +1,13 @@
 from django.db import models
 
 # Create your models here.
-class Pooja_Booking(models.Model):
+class PoojaBooking(models.Model):
     name = models.CharField(max_length=20)
     email = models.EmailField()
     phone_number = models.CharField(max_length=10)
-    pooja_name = models.CharField(50)
-    nakshatharam = models.CharField(50)
-    date = models.CharField(50)
+    poojaname = models.CharField(50)
+    nak = models.CharField(50)
+    booking_date = models.CharField(50)
     quantity = models.IntegerField()
     
     def __str__(self):

@@ -4,4 +4,4 @@ from . models import *
 
 admin.site.register(Pooja_Name)
 admin.site.register(Nakshatharam)
-admin.site.register(Pooja_Booking)
+admin.site.register(PoojaBooking)
