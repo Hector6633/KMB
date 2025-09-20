@@ -147,13 +147,6 @@ MEDIA_ROOT = BASE_DIR/ 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Cache memory implementation
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
-    }
-}
 
 # for E-mail verification
 EMAIL_HOST = env("EMAIL_HOST")
